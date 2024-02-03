@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -57,16 +59,28 @@ class ManyToOneEager {
     }
 
     @Test
-    @DisplayName("OneToMany 지연 로딩일 경우 한 팀 중 멤버 이름 가져오기.")
-    void getAllTeamsWhenLazy() {
-        List<Team> allTeam = teamRepository.findAll();
+    @DisplayName("OneToMany 지연 로딩일 경우 팀 - 멤버들 출력하기")
+    @Transactional
+    void getAllTeamsWithMembersWhenLazy() {
+        List<Team> allTeams = teamRepository.findAll();
 
-        List<Member> members = allTeam.get(0).getMembers();
-
-        for (Member member : members) {
-            System.out.println(member.getName());
+        for (Team team : allTeams) {
+            for (Member member : team.getMembers()) {
+                System.out.println("Team : " + team.getName() + " / Member : " + member.getName());
+            }
         }
     }
 
+    @Test
+    @DisplayName("fetchJoin을 이용해서팀의 멤버들 이름을 가져옴")
+    @Transactional
+    void getAllTeamsWithFetchJoin() {
+        List<Team> allTeams = teamRepository.findAllJoinFetch();
 
+        for (Team team : allTeams) {
+            for (Member member : team.getMembers()) {
+                System.out.println("Team : " + team.getName() + " / Member : " + member.getName());
+            }
+        }
+    }
 }
