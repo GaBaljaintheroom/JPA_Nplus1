@@ -83,4 +83,17 @@ class ManyToOneEager {
             }
         }
     }
+
+    @Test
+    @DisplayName("EntityGraph을 이용해서팀의 멤버들 이름을 가져옴")
+    @Transactional
+    void getAllTeamsWithEntityGraph() {
+        List<Team> allTeams = teamRepository.findAllByEntityGraph();
+
+        for (Team team : allTeams) {
+            for (Member member : team.getMembers()) {
+                System.out.println("Team : " + team.getName() + " / Member : " + member.getName());
+            }
+        }
+    }
 }
