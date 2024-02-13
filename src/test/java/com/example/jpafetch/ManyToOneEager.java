@@ -1,5 +1,7 @@
 package com.example.jpafetch;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.example.jpafetch.entity.Member;
 import com.example.jpafetch.entity.Team;
 import com.example.jpafetch.repository.MemberRepository;
@@ -10,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 class ManyToOneEager {
@@ -72,7 +72,7 @@ class ManyToOneEager {
     }
 
     @Test
-    @DisplayName("fetchJoin을 이용해서팀의 멤버들 이름을 가져옴")
+    @DisplayName("fetchJoin을 이용해서 팀의 멤버들 이름을 가져옴")
     @Transactional
     void getAllTeamsWithFetchJoin() {
         List<Team> allTeams = teamRepository.findAllJoinFetch();
@@ -85,7 +85,7 @@ class ManyToOneEager {
     }
 
     @Test
-    @DisplayName("EntityGraph을 이용해서팀의 멤버들 이름을 가져옴")
+    @DisplayName("EntityGraph을 이용해서 팀의 멤버들 이름을 가져옴")
     @Transactional
     void getAllTeamsWithEntityGraph() {
         List<Team> allTeams = teamRepository.findAllByEntityGraph();
