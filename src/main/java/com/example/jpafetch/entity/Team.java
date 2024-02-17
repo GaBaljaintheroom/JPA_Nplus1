@@ -32,6 +32,9 @@ public class Team {
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Member> members;
 
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Sponsor> sponsors;
+
     @Builder
     private Team(String name) {
         this.name = name;
